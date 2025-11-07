@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/yummy-corp/yummyos-common/common/config"
+	"github.com/yummy-corp/yummyos-common-new/common/config"
 )
 
 type Token struct {

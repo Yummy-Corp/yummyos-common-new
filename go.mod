@@ -1,4 +1,4 @@
-module github.com/yummy-corp/yummyos-common
+module github.com/yummy-corp/yummyos-common-new
 
 go 1.19
 
