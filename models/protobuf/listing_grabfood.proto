@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+option go_package = "github.com/yummy-corp/yummyos-spec/models/protobuf";
+
+package protobuf;
+
+message ListingGrabFood {
+    message Listing {
+
+        message Currency {
+            string code = 1 [json_name="code"];
+            int32 exponent = 2 [json_name="exponent"];
+            string symbol = 3 [json_name="symbol"];
+        }
+
+        message SellingTime {
+            message ServiceHour {
+                message ServiceDay {
+                    message ServicePeriod {
+                        string start_time = 1 [json_name="startTime"];
+                        string end_time = 2 [json_name="endTime"];
+                    }
+
+                    string open_period_type = 1 [json_name="openPeriodType"];
+                    repeated ServicePeriod periods = 2 [json_name="periods"];
+                }
+
+                ServiceDay sun = 1 [json_name="sun"];
+                ServiceDay mon = 2 [json_name="mon"];
+                ServiceDay tue = 3 [json_name="tue"];
+                ServiceDay wed = 4 [json_name="wed"];
+                ServiceDay thu = 5 [json_name="thu"];
+                ServiceDay fri = 6 [json_name="fri"];
+                ServiceDay sat = 7 [json_name="sat"];
+            }
+
+            string start_time = 1 [json_name="startTime"];
+            string end_time = 2 [json_name="endTime"];
+            string id = 3 [json_name="id"];
+            string name = 4 [json_name="name"];
+            ServiceHour service_hours = 5 [json_name="serviceHours"];
+        }
+
+        message Category {
+            message Item {
+                message ModifierGroup {
+                    message Modifier {
+                        string id = 1 [json_name="id"];
+                        string name = 2 [json_name="name"];
+                        string available_status = 3 [json_name="availableStatus"];
+                        float price = 4 [json_name="price"];
+                    }
+
+                    string id = 1 [json_name="id"];
+                    string name = 2 [json_name="name"];
+                    string available_status = 3 [json_name="availableStatus"];
+                    int32 selection_range_min = 4 [json_name="selectionRangeMin"];
+                    int32 selection_range_max = 5 [json_name="selectionRangeMax"];                    
+                    repeated Modifier modifiers = 6 [json_name="modifiers"];
+                }
+
+                string id = 1 [json_name="id"];
+                string name = 2 [json_name="name"];
+                string selling_time_id = 3 [json_name="sellingTimeID"];
+                string available_status = 4 [json_name="availableStatus"];
+                string description = 5 [json_name="description"];
+                float price = 6 [json_name="price"];
+                repeated string photos = 7 [json_name="photos"];
+                repeated ModifierGroup modifier_groups = 8 [json_name="modifierGroups"];         
+            }
+
+            string id = 1 [json_name="id"];
+            string name = 2 [json_name="name"];
+            string selling_time_id = 3 [json_name="sellingTimeID"];
+            string available_status = 4 [json_name="availableStatus"];
+            repeated Item items = 5 [json_name="items"];
+        }
+
+        string merchant_id = 1 [json_name="merchantID"];
+        string partner_merchant_id = 2 [json_name="partnerMerchantID"];
+        Currency currency = 3 [json_name="currency"];
+        repeated SellingTime selling_times = 4 [json_name="sellingTimes"];
+        repeated Category categories = 5 [json_name="categories"];
+    }
+
+    string merchant_id = 1 [json_name="merchant_id"];
+    repeated string sales_channels = 2 [json_name="sales_channels"];
+    Listing listing = 3 [json_name="listing"];
+}

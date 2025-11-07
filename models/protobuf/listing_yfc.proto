@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option go_package = "github.com/yummy-corp/yummyos-spec/models/protobuf";
+
+package protobuf;
+
+message YfcMenu {
+    message Products {
+        message ModifierGroups {
+            message Modifiers {
+                string sku = 1 [json_name="sku"];
+                string name = 2 [json_name="name"];
+                float price = 3 [json_name="price"];
+                string availableStatus = 4 [json_name="availableStatus"];
+            }
+
+            string sku = 1 [json_name="sku"];
+            string name = 2 [json_name="name"];
+            int32 selectionRangeMin = 3 [json_name="selectionRangeMin"];
+            int32 selectionRangeMax = 4 [json_name="selectionRangeMax"];
+            repeated Modifiers modifiers = 5 [json_name="modifiers"];
+        }
+
+        string sku = 1 [json_name="sku"];
+        string name = 2 [json_name="name"];
+        string description = 3 [json_name="description"];
+        string availableStatus = 4 [json_name="availableStatus"];
+        float price = 5 [json_name="price"];
+        string image = 6 [json_name="image"];
+        string category = 7 [json_name="category"];
+        repeated ModifierGroups modifierGroups = 8 [json_name="modifierGroups"];
+    }
+
+    string merchantID = 1 [json_name="merchantId"];
+    repeated Products products = 2 [json_name="products"];
+}

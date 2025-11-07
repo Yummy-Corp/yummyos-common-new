@@ -1,0 +1,1539 @@
+---
+swagger: "2.0"
+info:
+  title: "YummyOS - OpenAPI"
+  description:
+    "This is YummyCorp OpenAPI specification for [yummyos.yummycorp.com](https://www.yummycorp.com).\
+    \ You can find out more about YummyOS at [yummycorp.com](https://www.yummycorp.com).\
+    \ You will need the `apiKey` for authorization"
+  version: "1.0.0"
+schemes:
+  - "https"
+security: []
+tags:
+  - name: "hello"
+    description: "Hello World"
+  - name: "auth"
+    description: "Auth"
+  - name: "merchant"
+    description: "Merchant CRUD"
+  - name: "price"
+    description: "Price CRUD"
+  - name: "listing"
+    description: "Listing import/export"
+  - name: "grabfood"
+    description: "GrabFood webhooks"
+  - name: "gofood"
+    description: "GoFood webhooks"
+
+paths:
+  /hello/auth:
+    get:
+      tags:
+        - "hello"
+      summary: "Hello World"
+      operationId: "helloAuth"
+      x-google-backend:
+        address: https://auth-service-sqhjv6cojq-et.a.run.app
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+            example: "Hello, World!"
+  /hello/merchant:
+    get:
+      tags:
+        - "hello"
+      summary: "Hello World"
+      operationId: "helloMerchant"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+            example: "Hello, World!"
+  /hello/listing:
+    get:
+      tags:
+        - "hello"
+      summary: "Hello World"
+      operationId: "helloListing"
+      x-google-backend:
+        address: https://listing-service-sqhjv6cojq-et.a.run.app
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+            example: "Hello, World!"
+  /hello/grabfood:
+    get:
+      tags:
+        - "hello"
+      summary: "Hello World"
+      operationId: "helloGrabFood"
+      x-google-backend:
+        address: https://grabfood-service-sqhjv6cojq-et.a.run.app
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+            example: "Hello, World!"
+  /hello/gofood:
+    get:
+      tags:
+        - "hello"
+      summary: "Hello World"
+      operationId: "helloGoFood"
+      x-google-backend:
+        address: https://gofood-service-sqhjv6cojq-et.a.run.app
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+            example: "Hello, World!"
+  /oauth/token:
+    post:
+      tags:
+        - "auth"
+      summary: "generate a token"
+      operationId: "generateToken"
+      x-google-backend:
+        address: https://auth-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Client object"
+          required: true
+          schema:
+            $ref: "#/definitions/Client"
+      responses:
+        201:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Token"
+        401:
+          description: "Unauthorized"
+  /merchants:
+    get:
+      tags:
+        - "merchant"
+      summary: "Get all merchants"
+      operationId: "getMerchantAll"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Merchant"
+        404:
+          description: "Merchant not found"
+    post:
+      tags:
+        - "merchant"
+      summary: "Create a new merchant"
+      operationId: "createMerchant"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Merchant object"
+          required: true
+          schema:
+            $ref: "#/definitions/Merchant"
+      responses:
+        201:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Merchant"
+        404:
+          description: "Merchant not found"
+  /merchants/{id}:
+    get:
+      tags:
+        - "merchant"
+      summary: "Get a merchant"
+      operationId: "getMerchant"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to return"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Merchant"
+        404:
+          description: "Merchant not found"
+    put:
+      tags:
+        - "merchant"
+      summary: "Update an existing merchant"
+      operationId: "updateMerchant"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to update"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Merchant object"
+          required: true
+          schema:
+            $ref: "#/definitions/Merchant"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Merchant"
+        404:
+          description: "Merchant not found"
+    delete:
+      tags:
+        - "merchant"
+      summary: "Delete an existing merchant"
+      operationId: "deleteMerchant"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to delete"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "Merchant not found"
+  /merchants/categories/{id}:
+    get:
+      tags:
+        - "merchant"
+      summary: "Get merchant categories"
+      operationId: "getMerchantCategories"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to return its categories"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Categories"
+        404:
+          description: "Merchant not found"
+    put:
+      tags:
+        - "merchant"
+      summary: "Update merchant existing categories"
+      operationId: "updateMerchantCategories"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to update its categories"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Array of category objects"
+          required: true
+          schema:
+            $ref: "#/definitions/Categories"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Categories"
+        404:
+          description: "Merchant not found"
+  /merchants/availability/{id}:
+    get:
+      tags:
+        - "merchant"
+      summary: "Get merchant availabilities"
+      operationId: "getMerchantAvailabilities"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to return its availabilities"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Availabilities"
+        404:
+          description: "Merchant not found"
+    put:
+      tags:
+        - "merchant"
+      summary: "Update merchant availabilities"
+      operationId: "updateMerchantAvailabilities"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to update its availabilities"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Array of avaiability objects"
+          required: true
+          schema:
+            $ref: "#/definitions/Availabilities"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Availabilities"
+        404:
+          description: "Merchant not found"
+  /prices/item/{id}:
+    get:
+      tags:
+        - "price"
+      summary: "Get prices for item"
+      operationId: "getPriceItem"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of item to return its prices"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Price"
+        404:
+          description: "Item not found"
+    put:
+      tags:
+        - "price"
+      summary: "Update prices for item"
+      operationId: "updatePriceItem"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of item to update its prices"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Price object"
+          required: true
+          schema:
+            $ref: "#/definitions/Price"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Price"
+        404:
+          description: "Item not found"
+  /listings/import/{id}:
+    post:
+      tags:
+        - "listing"
+      summary: "Import a listing"
+      operationId: "importListing"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to import listing"
+          required: true
+          type: "string"
+      responses:
+        201:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Price"
+        404:
+          description: "Merchant not found"
+  /listings/import-from-master/{id}:
+    post:
+      tags:
+        - "listing"
+      summary: "Import a listing from master"
+      operationId: "importListingFromMaster"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to import listing"
+          required: true
+          type: "string"
+      responses:
+        201:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Price"
+        404:
+          description: "Merchant not found"
+  /listings/export/grabfood/{id}:
+    get:
+      tags:
+        - "listing"
+      summary: "Export a GrabFood listing"
+      operationId: "exportGrabFood"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to export"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GrabFoodListing"
+        404:
+          description: "Merchant not found"
+  /listings/export/gofood/{id}:
+    get:
+      tags:
+        - "listing"
+      summary: "Export a GoFood listing"
+      operationId: "exportGoFood"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to export"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GoFoodListing"
+        404:
+          description: "Merchant not found"
+  /listings/sync/{id}:
+    post:
+      tags:
+        - "listing"
+      summary: "Sync a listing to its external platform"
+      operationId: "syncListing"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to export"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Merchant"
+        404:
+          description: "Merchant not found"
+  /listings/sync/yfc/{id}:
+    post:
+      tags:
+        - "listing"
+      summary: "Sync a listing to YFC"
+      operationId: "syncListingYfc"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of merchant to export"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Merchant"
+        404:
+          description: "Merchant not found"
+  /grabfood/merchant/menu:
+    get:
+      tags:
+        - "grabfood"
+      summary: "Webhook for GrabFood to get menu"
+      operationId: "grabfoodGetMenu"
+      x-google-backend:
+        address: https://grabfood-service-sqhjv6cojq-et.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - oauth2: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "merchantID"
+          in: "query"
+          description: "Code of merchant to export"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GrabFoodListing"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Merchant not found"
+  /grabfood/merchant/menu/trace:
+    post:
+      tags:
+        - "grabfood"
+      summary: "Webhook for GrabFood to notify menu sync"
+      operationId: "grabfoodMenuTrace"
+      x-google-backend:
+        address: https://grabfood-service-sqhjv6cojq-et.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - oauth2: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Trace object"
+          required: true
+          schema:
+            $ref: "#/definitions/GrabFoodMenuTrace"
+      responses:
+        201:
+          description: "successful operation"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Merchant not found"
+  /grabfood/orders:
+    post:
+      tags:
+        - "grabfood"
+      summary: "Webhook for GrabFood to send orders"
+      operationId: "grabfoodOrders"
+      x-google-backend:
+        address: https://oms-order-intergation-service-sqhjv6cojq-et.a.run.app/api/v1/webhook/grabfood/order
+        path_translation: CONSTANT_ADDRESS
+      security:
+        - oauth2: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        201:
+          description: "successful operation"
+        401:
+          description: "Unauthorized"
+  /grabfood/orders/state:
+    put:
+      tags:
+        - "grabfood"
+      summary: "Webhook for GrabFood to send order status"
+      operationId: "grabfoodOrderStatus"
+      x-google-backend:
+        address: https://oms-order-intergation-service-sqhjv6cojq-et.a.run.app/api/v1/webhook/grabfood/order/state
+        path_translation: CONSTANT_ADDRESS
+      security:
+        - oauth2: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        201:
+          description: "successful operation"
+        401:
+          description: "Unauthorized"
+  /gofood/orders:
+    post:
+      tags:
+        - "gofood"
+      summary: "Webhook for GoFood to send orders"
+      operationId: "gofoodOrders"
+      x-google-backend:
+        address: https://oms-order-intergation-service-sqhjv6cojq-et.a.run.app/api/v1/webhook/gofood
+        path_translation: CONSTANT_ADDRESS
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        201:
+          description: "successful operation"
+        401:
+          description: "Unauthorized"
+  /gofood/orders/state:
+    post:
+      tags:
+        - "gofood"
+      summary: "Webhook for GoFood to send order status"
+      operationId: "gofoodOrderStatus"
+      x-google-backend:
+        address: https://oms-order-intergation-service-sqhjv6cojq-et.a.run.app/api/v1/webhook/gofood
+        path_translation: CONSTANT_ADDRESS
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        201:
+          description: "successful operation"
+        401:
+          description: "Unauthorized"
+  /gofood/merchant/menu/trace:
+    post:
+      tags:
+        - "gofood"
+      summary: "Webhook for GoFood to notify menu sync"
+      operationId: "gofoodMenuTrace"
+      x-google-backend:
+        address: https://gofood-service-sqhjv6cojq-et.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Trace object"
+          required: true
+          schema:
+            $ref: "#/definitions/GoFoodMenuTrace"
+      responses:
+        201:
+          description: "successful operation"
+        404:
+          description: "Merchant not found"
+  /promotions:
+    post:
+      tags:
+        - "Promotion"
+      summary: "Create a new Promotion"
+      operationId: "createPromotion"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Promotion object"
+          required: true
+          schema:
+            $ref: "#/definitions/Promotion"
+      responses:
+        201:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Promotion"
+        404:
+          description: "Promotion not found"
+  /promotions/{id}:
+    get:
+      tags:
+        - "promotion"
+      summary: "Get a Promotion"
+      operationId: "getPromotion"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id of promotion to return"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Promotion"
+        404:
+          description: "Promotion not found"
+    put:
+      tags:
+        - "promotion"
+      summary: "Update an existing Promotion"
+      operationId: "updatePromotion"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of promotion to update"
+          required: true
+          type: "string"
+        - name: "body"
+          in: "body"
+          description: "Promotion object"
+          required: true
+          schema:
+            $ref: "#/definitions/Promotion"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Promotion"
+        404:
+          description: "Promotion not found"
+    delete:
+      tags:
+        - "promotion"
+      summary: "Delete an existing promotion"
+      operationId: "deletePromotion"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Code of promotion to delete"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "Promotion not found"
+  /promotions/sync:
+    post:
+      tags:
+        - "promotion"
+      summary: "Sync a promotion to YFC"
+      operationId: "syncPromotionYfc"
+      x-google-backend:
+        address: https://merchant-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Promotion"
+        404:
+          description: "Promotion not found"
+  /voucherify/sync-redemption:
+    get:
+      tags:
+        - "voucherify"
+      summary: "voucherify sync redemption"
+      operationId: "voucherifySyncRedemption"
+      x-google-backend:
+        address: https://cron-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "Sync redemption not found"
+  /voucherify/sync-redemption-daily:
+    get:
+      tags:
+        - "voucherify"
+      summary: "voucherify sync redemption daily"
+      operationId: "voucherifySyncRedemptionDaily"
+      x-google-backend:
+        address: https://cron-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "Sync redemption not found"
+  /voucherify/sync-redemption-ds-overtime:
+    get:
+      tags:
+        - "voucherify"
+      summary: "voucherify sync redemption ds overtime"
+      operationId: "voucherifySyncRedemptionDsOvertime"
+      x-google-backend:
+        address: https://cron-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "Sync redemption not found"
+  /voucherify/create-campaign:
+    post:
+      tags:
+        - "voucherify"
+      summary: "voucherify create campaign"
+      operationId: "voucherifyCreateCampaign"
+      x-google-backend:
+        address: https://cron-service-sqhjv6cojq-et.a.run.app/
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "Create campaign not found"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+  oauth2:
+    authorizationUrl: "https://yummycorp.jp.auth0.com/"
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "https://yummycorp.jp.auth0.com/"
+    x-google-jwks_uri: "https://yummycorp.jp.auth0.com/.well-known/jwks.json"
+    x-google-audiences: "https://yummyos.yummycorp.com/"
+
+definitions:
+  Client:
+    type: "object"
+    required:
+      - "client_id"
+      - "client_secret"
+    properties:
+      client_id:
+        type: "string"
+      client_secret:
+        type: "string"
+      audience:
+        type: "string"
+        example: "https://yummyos.yummycorp.com/"
+      grant_type:
+        type: "string"
+        example: "client_credentials"
+  Token:
+    type: "object"
+    required:
+      - "access_token"
+    properties:
+      access_token:
+        type: "string"
+      scope:
+        type: "string"
+        example: "read:listing"
+      expires_in:
+        type: "integer"
+        format: "int32"
+      token_type:
+        type: "string"
+        example: "Bearer"
+  Merchant:
+    type: "object"
+    required:
+      - "merchant_code"
+    properties:
+      merchant_code:
+        type: "string"
+        example: "6-C242GNUDGNLWDE"
+      partner_merchant_code:
+        type: "string"
+        example: "MBE-6-C242GNUDGNLWDE"
+      name:
+        type: "string"
+        example: "Wakasimurah - Yummykitchen Boulevard BSD (YK58)"
+      currency_code:
+        type: "string"
+        example: "IDR"
+      currency_symbol:
+        type: "string"
+        example: "Rp"
+      currency_exponent:
+        type: "integer"
+        format: "int32"
+      start_operations:
+        type: "string"
+        format: "date-time"
+      end_operations:
+        type: "string"
+        format: "date-time"
+      is_grabfood:
+        type: "boolean"
+      is_gofood:
+        type: "boolean"
+      is_import:
+        type: "boolean"
+  Promotion:
+    type: "object"
+    properties:
+      merchant_code:
+        type: "string"
+        example: "6-C242GNUDGNLWDE"
+      name:
+        type: "string"
+        example: "Promo Test"
+      sku:
+        type: "string"
+        example: "sku-test"
+      price:
+        type: "integer"
+        format: "int32"
+      start_date:
+        type: "string"
+        format: "date-time"
+      end_date:
+        type: "string"
+        format: "date-time"
+  Categories:
+    type: "object"
+    properties:
+      categories:
+        type: "array"
+        items:
+          $ref: "#/definitions/Category"
+  Category:
+    type: "object"
+    required:
+      - "category_code"
+    properties:
+      category_code:
+        type: "string"
+        example: "2621-AGW-Ayam Geprek Sambal"
+      rank:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+        example: "Ayam Geprek Sambel"
+      parent_code:
+        type: "string"
+        example: "2620-AGW-Ayam Geprek"
+  Availabilities:
+    type: "object"
+    properties:
+      availabilities:
+        type: "array"
+        items:
+          $ref: "#/definitions/Availability"
+  Availability:
+    type: "object"
+    required:
+      - "code"
+    properties:
+      type:
+        type: "string"
+        example: "CATEGORY"
+      code:
+        type: "string"
+        example: "2621-AGW-Ayam Geprek Sambal"
+      name:
+        type: "string"
+        example: "Ayam Geprek Sambel"
+      available_status:
+        type: "string"
+        example: "AVAILABLE"
+
+  Price:
+    type: "object"
+    required:
+      - "code"
+    properties:
+      type:
+        type: "string"
+        example: "ITEM"
+      code:
+        type: "string"
+        example: "HOUS00071916"
+      name:
+        type: "string"
+        example: "Ayam Geprek Sambel Bawang"
+      price_merchants:
+        type: "array"
+        items:
+          $ref: "#/definitions/PriceMerchants"
+  PriceMerchants:
+    type: "object"
+    required:
+      - "merchant_code"
+    properties:
+      merchant_code:
+        type: "string"
+        example: "6-C242GNUDGNLWDE"
+      price:
+        type: "number"
+        format: "float"
+
+  GrabFoodListing:
+    type: "object"
+    properties:
+      merchantID:
+        type: "string"
+        example: "6-C242GNUDGNLWDE"
+      partnerMerchantID:
+        type: "string"
+        example: "MBE-6-C242GNUDGNLWDE"
+      currency:
+        $ref: "#/definitions/GrabFoodCurrency"
+      sellingTimes:
+        type: "array"
+        items:
+          $ref: "#/definitions/GrabFoodSellingTime"
+      categories:
+        type: "array"
+        items:
+          $ref: "#/definitions/GrabFoodCategory"
+  GrabFoodCurrency:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        example: "IDR"
+      exponent:
+        type: "integer"
+        format: "int32"
+      symbol:
+        type: "string"
+        example: "Rp"
+  GrabFoodSellingTime:
+    type: "object"
+    properties:
+      startTime:
+        type: "string"
+        format: "date-time"
+      endTime:
+        type: "string"
+        format: "date-time"
+      id:
+        type: "string"
+        example: "1394-AGW-Boulevard BSD (YK58)"
+      name:
+        type: "string"
+        example: "AGW-Boulevard BSD (YK58)"
+      serviceHours:
+        $ref: "#/definitions/GrabFoodServiceHour"
+  GrabFoodServiceHour:
+    type: "object"
+    properties:
+      sun:
+        $ref: "#/definitions/GrabFoodServiceDay"
+      mon:
+        $ref: "#/definitions/GrabFoodServiceDay"
+      tue:
+        $ref: "#/definitions/GrabFoodServiceDay"
+      wed:
+        $ref: "#/definitions/GrabFoodServiceDay"
+      thu:
+        $ref: "#/definitions/GrabFoodServiceDay"
+      fri:
+        $ref: "#/definitions/GrabFoodServiceDay"
+      sat:
+        $ref: "#/definitions/GrabFoodServiceDay"
+  GrabFoodServiceDay:
+    type: "object"
+    properties:
+      openPeriodType:
+        type: "string"
+        example: "OpenPeriod"
+      periods:
+        $ref: "#/definitions/GrabFoodPeriod"
+  GrabFoodPeriod:
+    type: "object"
+    properties:
+      startTime:
+        type: "string"
+        example: "10:00"
+      endTime:
+        type: "string"
+        example: "22:00"
+  GrabFoodCategory:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "2621-AGW-Ayam Geprek Sambal"
+      name:
+        type: "string"
+        example: "Ayam Geprek Sambel"
+      sellingTimeID:
+        type: "string"
+        example: "1394-AGW-Boulevard BSD (YK58)"
+      availableStatus:
+        type: "string"
+        enum:
+          - "AVAILABLE"
+          - "UNAVAILABLE"
+          - "HIDE"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/GrabFoodItem"
+  GrabFoodItem:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "HOUS00071915"
+      name:
+        type: "string"
+        example: "Ayam Geprek Sambel Matah"
+      sellingTimeID:
+        type: "string"
+        example: "1394-AGW-Boulevard BSD (YK58)"
+      availableStatus:
+        type: "string"
+        enum:
+          - "AVAILABLE"
+          - "UNAVAILABLE"
+      description:
+        type: "string"
+        example: "Nasi Putih + Ayam Geprek disajikan pake Sambel Matah khas Bali."
+      price:
+        type: "number"
+        format: "float"
+      photos:
+        type: "array"
+        items:
+          type: "string"
+          example: "https://pos-api.yummycorp.com/grabapi/merchant/menu/image/items-publish-yummy-54251-512.jpg"
+      modifierGroups:
+        type: "array"
+        items:
+          $ref: "#/definitions/GrabFoodModifierGroup"
+  GrabFoodModifierGroup:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "AGW-Ekstra"
+      name:
+        type: "string"
+        example: "Ekstra"
+      availableStatus:
+        type: "string"
+        enum:
+          - "AVAILABLE"
+          - "UNAVAILABLE"
+      selectionRangeMin:
+        type: "integer"
+        format: "int32"
+      selectionRangeMax:
+        type: "integer"
+        format: "int32"
+      modifiers:
+        type: "array"
+        items:
+          $ref: "#/definitions/GrabFoodModifier"
+  GrabFoodModifier:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "HOUS00071912"
+      name:
+        type: "string"
+        example: "Ekstra Nasi Putih"
+      availableStatus:
+        type: "string"
+        enum:
+          - "AVAILABLE"
+          - "AUNAVAILABLE"
+      price:
+        type: "number"
+        format: "float32"
+  GrabFoodMenuTrace:
+    type: "object"
+    properties:
+      requestID:
+        type: "string"
+        example: "6b5e362a-caa1-4858-908b-dae145d317bc"
+      merchantID:
+        type: "string"
+        example: "6-C242GNUDGNLWDE"
+      jobID:
+        type: "string"
+        example: "36bb8bb8-4aef-4eca-bed9-fd5ae1e4dc11"
+      updatedAt:
+        type: "string"
+        format: "date-time"
+      status:
+        type: "string"
+        example: "QUEUEING"
+      errors:
+        type: "array"
+        items:
+          type: "string"
+
+  GoFoodListing:
+    type: "object"
+    properties:
+      request_id:
+        type: "string"
+      menus:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodMenu"
+      variant_categories:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodVariantCategory"
+  GoFoodMenu:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Ayam Geprek Sambel"
+      menu_items:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodMenuItem"
+  GoFoodMenuItem:
+    type: "object"
+    properties:
+      external_id:
+        type: "string"
+        example: "HOUS00071915"
+      name:
+        type: "string"
+        example: "Ayam Geprek Sambel Matah"
+      description:
+        type: "string"
+        example: "Nasi Putih + Ayam Geprek disajikan pake Sambel Matah khas Bali."
+      in_stock:
+        type: "boolean"
+      price:
+        type: "number"
+        format: "float32"
+      image:
+        type: "string"
+        example: "https://pos-api.yummycorp.com/grabapi/merchant/menu/image/items-publish-yummy-54251-512.jpg"
+      operational_hours:
+        $ref: "#/definitions/GoFoodOperationalHour"
+      variant_category_external_ids:
+        type: "array"
+        items:
+          type: "string"
+          example: "AGW-Ekstra"
+  GoFoodOperationalHour:
+    type: "object"
+    properties:
+      sunday:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodPeriod"
+      monday:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodPeriod"
+      tuesday:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodPeriod"
+      wednesday:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodPeriod"
+      thursday:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodPeriod"
+      friday:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodPeriod"
+      saturday:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodPeriod"
+  GoFoodPeriod:
+    type: "object"
+    properties:
+      start:
+        type: "string"
+        example: "10:00"
+      end:
+        type: "string"
+        example: "22:00"
+  GoFoodVariantCategory:
+    type: "object"
+    properties:
+      external_id:
+        type: "string"
+        example: "AGW-Ekstra"
+      internal_name:
+        type: "string"
+        example: "Ekstra"
+      name:
+        type: "string"
+        example: "Ekstra"
+      rules:
+        $ref: "#/definitions/GoFoodRule"
+      variants:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodVariant"
+  GoFoodRule:
+    type: "object"
+    properties:
+      selection:
+        $ref: "#/definitions/GoFoodSelection"
+  GoFoodSelection:
+    type: "object"
+    properties:
+      min_quantity:
+        type: "number"
+        format: "int32"
+      max_quantity:
+        type: "number"
+        format: "int32"
+  GoFoodVariant:
+    type: "object"
+    properties:
+      external_id:
+        type: "string"
+        example: "HOUS00071912"
+      name:
+        type: "string"
+        example: "Ekstra Nasi Putih"
+      price:
+        type: "number"
+        format: "float32"
+      in_stock:
+        type: "boolean"
+  GoFoodMenuTrace:
+    type: "object"
+    properties:
+      header:
+        $ref: "#/definitions/GoFoodMenuTraceHeader"
+      body:
+        $ref: "#/definitions/GoFoodMenuTraceBody"
+  GoFoodMenuTraceHeader:
+    type: "object"
+    properties:
+      event_name:
+        type: "string"
+        example: "gofood.catalog.menu_mapping_updated"
+      event_id:
+        type: "string"
+        example: "c1be7fa1-645e-3d57-9ca3-f2cb54212345"
+      version:
+        type: "number"
+        format: "int32"
+      timestamp:
+        type: "string"
+        format: "date-time"
+  GoFoodMenuTraceBody:
+    type: "object"
+    properties:
+      request_id:
+        type: "string"
+        example: "415bcd04-ddcb-4cdf-bfd2-63a8095b8865"
+      outlet:
+        $ref: "#/definitions/GoFoodMenuTraceBodyOutlet"
+      menus:
+        type: "array"
+        items:
+          $ref: "#/definitions/GoFoodMenuTraceBodyMenus"
+  GoFoodMenuTraceBodyOutlet:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "G360431380"
+      external_outlet_id:
+        type: "string"
+        example: "451"
+  GoFoodMenuTraceBodyMenus:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "415bcd04-ddcb-4cdf-bfd2-63a8095b8865"
+      external_menu_id:
+        type: "string"
+        example: "HOUS00071915"

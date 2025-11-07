@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option go_package = "github.com/yummy-corp/yummyos-spec/models/protobuf";
+
+package protobuf;
+
+message ListingGoFood {
+    message Listing {
+        message Menu {
+            message MenuItem {
+                message OperationalHour {
+                    message Period {
+                        string start = 1 [json_name="start"];
+                        string end = 2 [json_name="end"];
+                    }
+                    repeated Period sunday = 1 [json_name="sunday"];
+                    repeated Period monday = 2 [json_name="monday"];
+                    repeated Period tuesday = 3 [json_name="tuesday"];
+                    repeated Period wednesday = 4 [json_name="wednesday"];
+                    repeated Period thursday = 5 [json_name="thursday"];
+                    repeated Period friday = 6 [json_name="friday"];
+                    repeated Period saturday = 7 [json_name="saturday"];
+                }
+
+                string external_id = 1 [json_name="external_id"];
+                string name = 2 [json_name="name"];
+                string description = 3 [json_name="description"];
+                bool in_stock = 4 [json_name="in_stock"];
+                float price = 5 [json_name="price"];
+                string image = 6 [json_name="image"];
+                OperationalHour operational_hours = 7 [json_name="operational_hours"];
+                repeated string variant_category_external_ids = 8 [json_name="variant_category_external_ids"];
+            }
+
+            string name = 1 [json_name="name"];
+            repeated MenuItem menu_items = 2 [json_name="menu_items"];
+        }
+
+        message VariantCategory {
+            message Rule {
+                message Selection {
+                    int32 min_quantity = 1 [json_name="min_quantity"];
+                    int32 max_quantity = 2 [json_name="max_quantity"];
+                }
+
+                Selection selection = 1 [json_name="selection"];
+            }
+
+            message Variant {
+                string external_id = 1 [json_name="external_id"];
+                string name = 2 [json_name="name"];
+                float price = 3 [json_name="price"];
+                bool in_stock = 4 [json_name="in_stock"];
+            }
+
+            string external_id = 1 [json_name="external_id"];
+            string internal_name = 2 [json_name="internal_name"];
+            string name = 3 [json_name="name"];
+            Rule rules = 4 [json_name="rules"];
+            repeated Variant variants = 5 [json_name="variants"];
+        }
+
+        string request_id = 1 [json_name="request_id"];
+        repeated Menu menus = 2 [json_name="menus"];
+        repeated VariantCategory variant_categories = 3 [json_name="variant_categories"];
+    }
+
+    string merchant_id = 1 [json_name="merchant_id"];
+    repeated string sales_channels = 2 [json_name="sales_channels"];
+    Listing listing = 3 [json_name="listing"];
+}

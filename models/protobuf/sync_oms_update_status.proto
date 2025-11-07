@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "github.com/yummy-corp/yummyos-spec/models/protobuf";
+
+package protobuf;
+
+message SyncOmsUpdateStatus {
+    string providerName = 1  [json_name="providerName"];
+    string merchantId = 2  [json_name="merchantId"];
+    string orderId = 3  [json_name="orderId"];
+    string syncStatus = 4  [json_name="syncStatus"];
+    string syncMessage = 5  [json_name="syncMessage"];
+    string eventName = 6  [json_name="eventName"];
+    string orderStatus = 7  [json_name="orderStatus"];
+    string shortOrderNumber = 8  [json_name="shortOrderNumber"];
+}

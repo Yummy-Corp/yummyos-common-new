@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "github.com/yummy-corp/yummyos-spec/models/protobuf";
+
+package protobuf;
+
+message YfcPromotion {
+    message Promotions {
+        string sku = 1 [json_name="sku"];
+        string name = 2 [json_name="name"];
+        float price = 3 [json_name="price"];
+        int64 startDate = 4 [json_name="startDate"];
+        int64 endDate = 5 [json_name="endDate"];
+        string merchantID = 6 [json_name="merchantId"];
+    }
+    repeated Promotions promotions = 1 [json_name="promotions"];
+}

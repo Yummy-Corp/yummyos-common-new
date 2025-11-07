@@ -1,0 +1,108 @@
+    name: yummyos-url-map
+    defaultService: global/backendServices/yummyos-backend-service
+    hostRules:
+    - hosts:
+      - qms.yummycorp.com
+      pathMatcher: qms-web-app-matcher
+    - hosts:
+      - order-integration.yummycorp.com
+      pathMatcher: yfc-order-integration-matcher
+    - hosts:
+      - inventory-new.yummycorp.com
+      pathMatcher: erp-inventory-matcher
+    - hosts:
+      - stocktake-new.yummycorp.com
+      pathMatcher: erp-stocktake-matcher
+    - hosts:
+      - stockwaste.yummycorp.com
+      pathMatcher: erp-stockwaste-matcher
+    - hosts:
+      - shop.yummykitchen.com
+      pathMatcher: yfc-customer-matcher
+    - hosts:
+      - admin.yummykitchen.com
+      pathMatcher: yfc-admin-matcher
+    - hosts:
+      - yummyos.yummycorp.com
+      pathMatcher: yummyos-matcher
+    pathMatchers:
+    - name: qms-web-app-matcher
+      defaultService: global/backendServices/qms-web-app-backend-service
+      routeRules:
+      - matchRules:
+        - prefixMatch: /
+        priority: 1000  # 0 is highest
+        routeAction:
+          weightedBackendServices:
+          - backendService: global/backendServices/qms-web-app-backend-service
+            weight: 100
+    - name: yfc-order-integration-matcher
+      defaultService: global/backendServices/yfc-order-integration-backend-service
+      routeRules:
+      - matchRules:
+        - prefixMatch: /
+        priority: 1000  # 0 is highest
+        routeAction:
+          weightedBackendServices:
+          - backendService: global/backendServices/yfc-order-integration-backend-service
+            weight: 100
+    - name: erp-inventory-matcher
+      defaultService: global/backendServices/erp-inventory-backend-service
+      routeRules:
+      - matchRules:
+        - prefixMatch: /
+        priority: 1000  # 0 is highest
+        routeAction:
+          weightedBackendServices:
+          - backendService: global/backendServices/erp-inventory-backend-service
+            weight: 100
+    - name: erp-stocktake-matcher
+      defaultService: global/backendServices/erp-stocktake-backend-service
+      routeRules:
+      - matchRules:
+        - prefixMatch: /
+        priority: 1000  # 0 is highest
+        routeAction:
+          weightedBackendServices:
+          - backendService: global/backendServices/erp-stocktake-backend-service
+            weight: 100
+    - name: erp-stockwaste-matcher
+      defaultService: global/backendServices/erp-stockwaste-backend-service
+      routeRules:
+      - matchRules:
+        - prefixMatch: /
+        priority: 1000  # 0 is highest
+        routeAction:
+          weightedBackendServices:
+          - backendService: global/backendServices/erp-stockwaste-backend-service
+            weight: 100
+    - name: yfc-customer-matcher
+      defaultService: global/backendServices/yfc-customer-backend-service
+      routeRules:
+      - matchRules:
+        - prefixMatch: /
+        priority: 1000  # 0 is highest
+        routeAction:
+          weightedBackendServices:
+          - backendService: global/backendServices/yfc-customer-backend-service
+            weight: 100
+    - name: yfc-admin-matcher
+      defaultService: global/backendServices/yfc-admin-backend-service
+      routeRules:
+      - matchRules:
+        - prefixMatch: /
+        priority: 1000  # 0 is highest
+        routeAction:
+          weightedBackendServices:
+          - backendService: global/backendServices/yfc-admin-backend-service
+            weight: 100
+    - name: yummyos-matcher
+      defaultService: global/backendServices/yummyos-backend-service
+      routeRules:
+      - matchRules:
+        - prefixMatch: /
+        priority: 1000  # 0 is highest
+        routeAction:
+          weightedBackendServices:
+          - backendService: global/backendServices/yummyos-backend-service
+            weight: 100
